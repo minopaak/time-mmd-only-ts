@@ -6,7 +6,7 @@ import torch
 from torch.utils.data import DataLoader
 
 from src.datasets.timemmd_dataset import load_domain_csv, get_feature_columns, TimeMMDWindowDataset
-from models.factory import get_model_class
+from src.models.factory import get_model_class  # 경로 수정
 from src.utils.scaler import StandardScalerNP
 
 def main():
@@ -15,6 +15,7 @@ def main():
     parser.add_argument("--csv_path", type=str, required=True)
     parser.add_argument("--ckpt_path", type=str, required=True)
     parser.add_argument("--output_csv", type=str, required=True)
+    parser.add_argument("--model", type=str, default="DLinear")  # 추가
     parser.add_argument("--device", type=str, default="cuda" if torch.cuda.is_available() else "cpu")
     args = parser.parse_args()
 
@@ -39,7 +40,8 @@ def main():
     loader = DataLoader(ds, batch_size=64, shuffle=False)
 
     ModelClass = get_model_class(args.model)
-    model = ModelClass(args).to(device)
+    args.enc_in = len(feature_cols)  # 추가
+    model = ModelClass(args).to(args.device)  # device 수정
     
     model.load_state_dict(ckpt["model_state_dict"])
     model.to(args.device)

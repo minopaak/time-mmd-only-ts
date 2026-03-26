@@ -9,7 +9,7 @@ from configs.domains import DOMAIN_CONFIG
 from src.datasets.timemmd_dataset import (
     load_domain_csv, time_split_df, get_feature_columns, TimeMMDWindowDataset
 )
-from models.factory import get_model_class
+from src.models.factory import get_model_class  # 경로 수정
 from src.utils.metrics import mae, mse, rmse, mape
 
 def train_one_domain(args):
@@ -44,7 +44,9 @@ def train_one_domain(args):
 
 
     ModelClass = get_model_class(args.model)
-    model = ModelClass(args).to(device)
+    # args 객체에 enc_in 추가 (모델에서 필요함)
+    args.enc_in = len(feature_cols)
+    model = ModelClass(args).to(args.device)  # device 수정
 
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
     criterion = torch.nn.MSELoss()
@@ -144,6 +146,7 @@ def main():
     parser.add_argument("--domain", type=str, required=True)
     parser.add_argument("--data_root", type=str, required=True)
     parser.add_argument("--output_root", type=str, default="./outputs")
+    parser.add_argument("--model", type=str, default="DLinear")  # 추가
     parser.add_argument("--seq_len", type=int, required=True)
     parser.add_argument("--pred_len", type=int, required=True)
     parser.add_argument("--batch_size", type=int, default=32)

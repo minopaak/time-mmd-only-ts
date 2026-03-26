@@ -1,9 +1,9 @@
 import torch
 import torch.nn as nn
 
-from models.common.base import ForecastModelBase
-from models.common.decomposition import SeriesDecomposition
-from models.common.linear_heads import ChannelToSingleTargetHead
+from src.models.common.base import ForecastModelBase  # 경로 수정
+from src.models.common.decomposition import SeriesDecomposition  # 경로 수정
+from src.models.common.linear_heads import ChannelToSingleTargetHead  # 경로 수정
 
 
 class Model(ForecastModelBase):

@@ -13,6 +13,7 @@ for domain, cfg in DOMAIN_CONFIG.items():
             "--domain", domain,
             "--data_root", DATA_ROOT,
             "--output_root", OUTPUT_ROOT,
+            "--model", "DLinear",  # 추가
             "--seq_len", str(seq_len),
             "--pred_len", str(pred_len),
             "--epochs", "50",
