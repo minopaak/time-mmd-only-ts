@@ -34,9 +34,9 @@ DOMAIN_CONFIG = {
         "label_len": 48,
         "pred_lens": [48, 96, 192, 336],
     },
-    "Health": {
+    "Health_US": {
         "freq_type": "weekly",
-        "csv": "Health/Health.csv",
+        "csv": "Health_US/Health_US.csv",
         "seq_len": 36,
         "label_len": 18,
         "pred_lens": [12, 24, 36, 48],
@@ -56,7 +56,7 @@ DOMAIN_CONFIG = {
         "pred_lens": [6, 8, 10, 12],
     },
     "Traffic": {
-        "freq_type": "monthly",
+        "freq_type": "monthly",        
         "csv": "Traffic/Traffic.csv",
         "seq_len": 8,
         "label_len": 4,
